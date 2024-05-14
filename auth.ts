@@ -13,15 +13,18 @@ declare module "next-auth" {
 }
 
 export const { auth, handlers:{ GET, POST }, signIn, signOut } = NextAuth({
+  pages: {
+    signIn: "/auth/login",
+    error: "/auth/error",
+  },
   callbacks: {
     async signIn({ user }) {
       const existingUser = await getUserById(user.id)
 
-      if(!existingUser || !existingUser.emailVerified) return false
+      if(!existingUser?.emailVerified) return false
 
       return true
     },
-
     async session({ token, session }) {
       console.log({ sessionToken: token })
   
