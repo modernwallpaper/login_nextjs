@@ -2,7 +2,7 @@
 import { CardWrapper } from "./card-wrapper"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
+import { Form, FormControl, FormField, FormItem, FormLabel }from "@/components/ui/form"
 import * as z from "zod"
 import { LoginSchema } from "@/schemas"
 import { Input } from "../ui/input"
@@ -11,7 +11,6 @@ import { FormError } from "../app/form-error"
 import { FormSuccess } from "../app/form-success"
 import { login } from "@/actions/login"
 import { useState, useTransition } from "react"
-import { useSearchParams } from "next/navigation"
 
 export const LoginForm = () => {
   const [isPending, startTransition] = useTransition()
