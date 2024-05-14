@@ -6,6 +6,7 @@ import { useCallback, useEffect, useState } from "react"
 import { newVerification } from "@/actions/new-verification"
 import { FormError } from "../app/form-error"
 import { FormSuccess } from "../app/form-success"
+import { Suspense } from "react"
 
 export const NewVerificationForm = () => {
   const searchParams = useSearchParams()
@@ -34,16 +35,18 @@ export const NewVerificationForm = () => {
   }, [onSubmit])
 
   return(
-    <CardWrapper headerLabel="Confirming your email" backButtonHref="/auth/login" backButtonLabel="Back to login">
-      <div className="flex items-center w-full justify-center">
-        {!success && !error &&(
-          <BarLoader color="#000000" className="rounded w-full" width={"180px"}/>
-        )}
-        <FormSuccess message={success}/>
-        {!success && (
-          <FormError message={error}/>
-        )}
-      </div>
-    </CardWrapper>
+    <Suspense>
+      <CardWrapper headerLabel="Confirming your email" backButtonHref="/auth/login" backButtonLabel="Back to login">
+        <div className="flex items-center w-full justify-center">
+          {!success && !error &&(
+            <BarLoader color="#000000" className="rounded w-full" width={"180px"}/>
+          )}
+          <FormSuccess message={success}/>
+          {!success && (
+            <FormError message={error}/>
+          )}
+        </div>
+      </CardWrapper>
+    </Suspense>
   )
 }
