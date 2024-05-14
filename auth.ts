@@ -14,6 +14,14 @@ declare module "next-auth" {
 
 export const { auth, handlers:{ GET, POST }, signIn, signOut } = NextAuth({
   callbacks: {
+    async signIn({ user }) {
+      const existingUser = await getUserById(user.id)
+
+      if(!existingUser || !existingUser.emailVerified) return false
+
+      return true
+    },
+
     async session({ token, session }) {
       console.log({ sessionToken: token })
   
