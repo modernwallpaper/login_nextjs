@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   description: "Online client for 1. Gelnhäuser Taekwondo Club 1968 eV",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;

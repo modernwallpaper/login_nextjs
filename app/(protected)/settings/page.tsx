@@ -1,12 +1,19 @@
-import { LogoutButton } from "@/actions/refresh"
-import { auth } from "@/auth"
+"use client"
+import { Button } from "@/components/ui/button"
+import { logout } from "@/actions/logout"
+import { useCurrentUser } from "@/hooks/use-current-session"
 
-export default async function Settings() {
-  const session = await auth()
+export default function Settings() {
+  const onClick = () => {
+     logout()
+  }
+
+  const user = useCurrentUser();
+  
   return (
-    <div className="flex">
-      SESSION: { JSON.stringify(session) }
-      <LogoutButton />
+    <div className="">
+      <Button onClick={onClick}>Logout</Button>
+      {JSON.stringify(user)}
     </div>
   )
 }
