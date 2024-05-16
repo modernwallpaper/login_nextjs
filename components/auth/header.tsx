@@ -12,7 +12,7 @@ export const Header = ({ label }: { label: string }) => {
       <h1 className={cn(
         "text-3xl font-semibold",
         font.className
-      )}>tkdathletics</h1>
+      )}>website</h1>
       <p className="text-muted-foreground">{label}</p>
     </div>
   )

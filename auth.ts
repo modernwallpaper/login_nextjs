@@ -19,7 +19,6 @@ export const { auth, handlers:{ GET, POST }, signIn, signOut } = NextAuth({
   },
   callbacks: {
     async session({ token, session }) {
-      console.log({ sessionToken: token })
   
       // Extend Session
       if(token.role && session.user) session.user.role = token.role

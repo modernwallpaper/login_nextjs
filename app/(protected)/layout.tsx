@@ -1,6 +1,7 @@
 import { SessionProvider } from "next-auth/react"
 import { Navbar } from "./_components/navbar"
 import { auth } from "@/auth"
+import { Toaster } from "@/components/ui/toaster"
 
 export default async function Layout({ children }: { children: React.ReactNode }) {
   const session = await auth()
@@ -10,6 +11,7 @@ export default async function Layout({ children }: { children: React.ReactNode }
         <Navbar />
         <div className="p-2">{children}</div>
       </main>
+      <Toaster />
     </SessionProvider>
   )
 }

@@ -16,7 +16,7 @@ export default function Home() {
         <h1 className={cn(
           "text-6xl font-semibold drop-shadow-md",
           font.className,
-        )}>tkdathletics</h1>
+        )}>website</h1>
         <p>A client for all athletes in the teakwondo association Gelnhausen</p>
         <div>
           <LoginButton>
