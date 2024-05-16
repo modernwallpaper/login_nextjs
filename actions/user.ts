@@ -29,4 +29,6 @@ export const createUser = async (values: z.infer<typeof createUserSchema>) => {
       role: role, 
     }
   })
+
+  return { success: "User created successfully" }
 }

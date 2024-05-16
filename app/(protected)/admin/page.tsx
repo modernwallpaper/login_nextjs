@@ -12,8 +12,8 @@ export default function AdminPage() {
 
   const onCreateUser = () => {
     createUser({ name: "", email: "", password: "", role: "USER" }).then((data) => {
-      if(data.error) toast({ variant: "destructive", description: "You do not have the necessary rights" })
-      if(data.success) toast({ variant: "default", description: "New user has been created" })
+      if(data?.error) toast({ variant: "destructive", description: "You do not have the necessary rights" })
+      if(data?.success) toast({ variant: "default", description: "New user has been created" })
     })
   }
 
