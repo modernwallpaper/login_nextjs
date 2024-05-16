@@ -17,7 +17,7 @@ export default function Home() {
           "text-6xl font-semibold drop-shadow-md",
           font.className,
         )}>website</h1>
-        <p>A client for all athletes in the teakwondo association Gelnhausen</p>
+        <p>A test site for user authentication and management using react</p>
         <div>
           <LoginButton>
             <Button size={"lg"}>
