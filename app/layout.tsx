@@ -5,8 +5,7 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "tkdathletics",
-  description: "Online client for 1. Gelnhäuser Taekwondo Club 1968 eV",
+  title: "Website",
 };
 
 export default async function RootLayout({
