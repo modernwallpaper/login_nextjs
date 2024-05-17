@@ -8,12 +8,11 @@ export default function Settings() {
      logout()
   }
 
-  const user = useCurrentUser();
+  // const user = useCurrentUser();
   
   return (
     <div className="">
       <Button onClick={onClick}>Logout</Button>
-      {JSON.stringify(user)}
     </div>
   )
 }
