@@ -13,7 +13,7 @@ import { startTransition, useState, useTransition } from "react"
 import { useForm } from "react-hook-form"
 import * as z from "zod"
 
-export const UpdateUserForm = ({ email, name, role, id }: { email: string | undefined, name: string | undefined, role: "ADMIN" | "USER", id: string }) => {
+export const UpdateUserForm = ({ email, name, role, id }: { email: string, name: string, role: "ADMIN" | "USER", id: string }) => {
   const form = useForm<z.infer<typeof UpdateUserSchema>>({
     resolver: zodResolver(UpdateUserSchema),
     defaultValues: {
