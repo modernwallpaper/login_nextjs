@@ -12,7 +12,6 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { useToast } from "@/components/ui/use-toast"
 import { CustomDialog } from "../dialog-custom"
 import { UpdateUserForm } from "../update-user-form"
 
@@ -59,7 +58,6 @@ export const columns: ColumnDef<User>[] = [
     id: "actions",
     cell: ({ row }) => {
       const user = row.original
-      const { toast } = useToast()
 
       return(
         <DropdownMenu>
