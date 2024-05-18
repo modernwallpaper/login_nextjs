@@ -14,7 +14,7 @@ export const Navbar = () => {
       <div className="border-b-2 flex justify-between items-center p-2 w-full backdrop-blur h-[60px] md:pr-20 md:pl-20">
         <div className="md:hidden">
           <Sheet>
-            <SheetTrigger>
+            <SheetTrigger asChild>
               <Button variant={"secondary"} size={"icon"}>
                 <Menu className="h-4 w-4"/>
               </Button>

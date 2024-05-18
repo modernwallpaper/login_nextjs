@@ -1,11 +1,12 @@
 "use server"
 import { currentRole } from "@/data/current-user"
 import { getUserByEmail } from "@/data/user"
-import { createUserSchema } from "@/schemas"
+import { UpdateUserSchema, createUserSchema } from "@/schemas"
 import { UserRole } from "@prisma/client"
 import * as z from "zod"
 import bcrypt from "bcryptjs"
 import { db } from "@/lib/db"
+import { logout } from "./logout"
 
 export const createUser = async (values: z.infer<typeof createUserSchema>) => {
   const role_session = await currentRole()
@@ -31,4 +32,44 @@ export const createUser = async (values: z.infer<typeof createUserSchema>) => {
   })
 
   return { success: "User created successfully" }
+}
+
+export const updateUserAsAdmin = async (values: z.infer<typeof UpdateUserSchema>) => {
+  const fields = UpdateUserSchema.safeParse(values)
+  if(!fields.success) return { error: "Invalid fields" }
+
+  const { name, email, password, role } = fields.data
+
+  const hashedPassword = await bcrypt.hash(password, 12)
+  await db.user.update({ 
+    where: { email: email },
+    data: {
+      name: name,
+      email: email,
+      password: hashedPassword,
+      role: role,
+    },
+  })
+
+  return { success: "User updated successfully" }
+}
+
+export const updateUserAsUser = async (values: z.infer<typeof UpdateUserSchema>) => {
+  const fields = UpdateUserSchema.safeParse(values)
+  if(!fields.success) return { error: "Invalid fields" }
+
+  const { name, email, password, role } = fields.data
+
+  const hashedPassword = await bcrypt.hash(password, 12)
+  await db.user.update({ 
+    where: { email: email },
+    data: {
+      name: name,
+      email: email,
+      password: hashedPassword,
+      role: role,
+    },
+  })
+  
+  logout()
 }
