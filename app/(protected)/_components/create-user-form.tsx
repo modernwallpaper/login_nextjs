@@ -31,7 +31,7 @@ export const CreateUserForm = () => {
   }
 
   return(
-    <div className="w-[400px] m-0">
+    <div className="w-[350px] m-0">
       <CardHeader>
         <CardTitle>Create a new User</CardTitle>
         <CardDescription>Enter the new user info to add them to the website</CardDescription>
