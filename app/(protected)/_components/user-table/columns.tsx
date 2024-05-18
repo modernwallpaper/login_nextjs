@@ -21,6 +21,8 @@ export type User = {
   password: string
   role: "USER" | "ADMIN"
   email: string
+  emailVerified: Date | null
+  image: string | null;
 }
 
 export const columns: ColumnDef<User>[] = [
