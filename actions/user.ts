@@ -35,14 +35,17 @@ export const createUser = async (values: z.infer<typeof createUserSchema>) => {
 }
 
 export const updateUserAsAdmin = async (values: z.infer<typeof UpdateUserSchema>) => {
+  const role_session = await currentRole()
+  if(role_session === UserRole.USER) return { error: "You are not allowed to update a user as admin" }
+
   const fields = UpdateUserSchema.safeParse(values)
   if(!fields.success) return { error: "Invalid fields" }
 
-  const { name, email, password, role } = fields.data
+  const { name, email, password, role, id } = fields.data
 
   const hashedPassword = await bcrypt.hash(password, 12)
   await db.user.update({ 
-    where: { email: email },
+    where: { id: id },
     data: {
       name: name,
       email: email,
@@ -58,11 +61,11 @@ export const updateUserAsUser = async (values: z.infer<typeof UpdateUserSchema>)
   const fields = UpdateUserSchema.safeParse(values)
   if(!fields.success) return { error: "Invalid fields" }
 
-  const { name, email, password, role } = fields.data
+  const { name, email, password, role, id } = fields.data
 
   const hashedPassword = await bcrypt.hash(password, 12)
   await db.user.update({ 
-    where: { email: email },
+    where: { id: id },
     data: {
       name: name,
       email: email,
@@ -73,3 +76,15 @@ export const updateUserAsUser = async (values: z.infer<typeof UpdateUserSchema>)
   
   logout()
 }
+
+export const getAllUsers = async() => {
+  const role_session = await currentRole()
+  if(role_session === UserRole.USER) return { error: "You are not allowed to get the users" }
+  try { 
+    const users = await db.user.findMany()
+    return users
+  } catch(error) {
+    return null
+  }
+}
+

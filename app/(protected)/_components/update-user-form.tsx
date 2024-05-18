@@ -1,33 +1,37 @@
 "use client"
-import { createUser } from "@/actions/user"
+import { updateUserAsAdmin } from "@/actions/user"
+import { FormError } from "@/components/app/form-error"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectTrigger, SelectValue, SelectItem } from "@/components/ui/select"
 import { useToast } from "@/components/ui/use-toast"
-import { createUserSchema } from "@/schemas"
+import { UpdateUserSchema, createUserSchema } from "@/schemas"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { startTransition } from "react"
+import { startTransition, useState, useTransition } from "react"
 import { useForm } from "react-hook-form"
 import * as z from "zod"
 
-export const CreateUserForm = () => {
-  const form = useForm<z.infer<typeof createUserSchema>>({
-    resolver: zodResolver(createUserSchema),
+export const UpdateUserForm = ({ email, name, role, id }: { email: string, name: string, role: "ADMIN" | "USER", id: string }) => {
+  const form = useForm<z.infer<typeof UpdateUserSchema>>({
+    resolver: zodResolver(UpdateUserSchema),
     defaultValues: {
-      email: "",
+      email: email,
       password: "",
-      name: "",
+      name: name,
+      role: role,
+      id: id,
     },
   })
 
+  const [isPending, startTransition] = useTransition()
   const { toast } = useToast()
 
-  const onSubmit = (values: z.infer<typeof createUserSchema>) => {
+  const onSubmit = (values: z.infer<typeof UpdateUserSchema>) => {
     startTransition(() => {
-      createUser(values).then((data) => {
-        if(data.error) toast({ title: data.error })
+      updateUserAsAdmin(values).then((data) => {
+        if(data.error) toast({ title: data.error, variant: "destructive" })
         toast({ title: data.success })
       })
     })    
@@ -36,8 +40,8 @@ export const CreateUserForm = () => {
   return(
     <div className="w-[350px] m-0">
       <CardHeader>
-        <CardTitle>Create a new user</CardTitle>
-        <CardDescription>Enter the new user info to add them to the website</CardDescription>
+        <CardTitle>Update an existing user</CardTitle>
+        <CardDescription>Enter the new user info to update</CardDescription>
       </CardHeader>
       <CardContent>
         <Form {...form}>
@@ -46,6 +50,7 @@ export const CreateUserForm = () => {
               <FormField
                 control={form.control}
                 name="name"
+                disabled={isPending}
                 render={({field}) => (
                   <FormItem>
                     <FormLabel>Name</FormLabel>
@@ -58,6 +63,7 @@ export const CreateUserForm = () => {
               <FormField
                 control={form.control}
                 name="email"
+                disabled={isPending}
                 render={({field}) => (
                   <FormItem>
                     <FormLabel>Email</FormLabel>
@@ -70,6 +76,7 @@ export const CreateUserForm = () => {
               <FormField
                 control={form.control}
                 name="password"
+                disabled={isPending}
                 render={({field}) => (
                   <FormItem>
                     <FormLabel>Password</FormLabel>
@@ -83,6 +90,7 @@ export const CreateUserForm = () => {
               <FormField
                 control={form.control}
                 name="role"
+                disabled={isPending}
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Role</FormLabel>
@@ -101,10 +109,11 @@ export const CreateUserForm = () => {
                 )}
               />
             </div>
-            <Button className="w-full" type="submit">Create user</Button>
+            <Button disabled={isPending} className="w-full" type="submit">Update user</Button>
           </form>
         </Form> 
       </CardContent>
     </div>
   )
 }
+

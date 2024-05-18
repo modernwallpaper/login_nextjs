@@ -1,15 +1,19 @@
-"use client"
 import { PageHeader } from "../_components/page-header"
 import { RoleGate } from "../_components/role-gate"
 import { UserRole } from "@prisma/client"
 import { AdminDashboard } from "../_components/admin-dashboard"
+import { UserList } from "../_components/user-list"
 
-export default function AdminPage() {
+export default async function AdminPage() {
+
   return(
     <div>
       <PageHeader label="Admin"/>
       <RoleGate allowedRole={UserRole.ADMIN}>
-        <AdminDashboard />
+        <div className="space-y-4">
+          <UserList />
+          <AdminDashboard />
+        </div>
       </RoleGate>
     </div>
   )
