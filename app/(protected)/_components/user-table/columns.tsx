@@ -18,10 +18,10 @@ import { UserRole } from "@prisma/client"
 
 export type User = {
   id: string
-  name: string | null
+  name: string | undefined 
   password: string
   role: UserRole 
-  email: string | null
+  email: string | undefined
   emailVerified: Date | null
   image: string | null;
 }
