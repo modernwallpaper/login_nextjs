@@ -21,7 +21,7 @@ export type User = {
   name: string | null
   password: string
   role: UserRole 
-  email: string | null
+  email: string
   emailVerified: Date | null
   image: string | null;
 }
