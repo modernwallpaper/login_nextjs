@@ -7,7 +7,7 @@ export const CustomDialog = ({ buttonLabel, children }: { buttonLabel: string, c
       <DialogTrigger asChild>
         <Button>{buttonLabel}</Button>
       </DialogTrigger>
-      <DialogContent className="p-2 md:p-12">
+      <DialogContent className="p-0 md:p-12">
         {children}
       </DialogContent>
     </Dialog>
