@@ -4,7 +4,7 @@ import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog"
 export const CustomDialog = ({ buttonLabel, children }: { buttonLabel: string, children: React.ReactNode }) => {
   return(
     <Dialog>
-      <DialogTrigger>
+      <DialogTrigger asChild>
         <Button>{buttonLabel}</Button>
       </DialogTrigger>
       <DialogContent className="p-2 md:p-12">
