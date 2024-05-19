@@ -8,9 +8,10 @@ import { Select, SelectContent, SelectTrigger, SelectValue, SelectItem } from "@
 import { useToast } from "@/components/ui/use-toast"
 import { createUserSchema } from "@/schemas"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { startTransition } from "react"
+import { startTransition, useTransition } from "react"
 import { useForm } from "react-hook-form"
 import * as z from "zod"
+import { useRouter } from "next/navigation"
 
 export const CreateUserForm = () => {
   const form = useForm<z.infer<typeof createUserSchema>>({
@@ -22,15 +23,20 @@ export const CreateUserForm = () => {
     },
   })
 
+  const router = useRouter()
+
   const { toast } = useToast()
+
+  const [isPending, startTransition] = useTransition()
 
   const onSubmit = (values: z.infer<typeof createUserSchema>) => {
     startTransition(() => {
       createUser(values).then((data) => {
+        router.refresh()
         if(data.error) toast({ title: data.error })
         toast({ title: data.success })
       })
-    })    
+    })   
   }
 
   return(
@@ -46,6 +52,7 @@ export const CreateUserForm = () => {
               <FormField
                 control={form.control}
                 name="name"
+                disabled={isPending}
                 render={({field}) => (
                   <FormItem>
                     <FormLabel>Name</FormLabel>
@@ -58,6 +65,7 @@ export const CreateUserForm = () => {
               <FormField
                 control={form.control}
                 name="email"
+                disabled={isPending}
                 render={({field}) => (
                   <FormItem>
                     <FormLabel>Email</FormLabel>
@@ -70,6 +78,7 @@ export const CreateUserForm = () => {
               <FormField
                 control={form.control}
                 name="password"
+                disabled={isPending}
                 render={({field}) => (
                   <FormItem>
                     <FormLabel>Password</FormLabel>
@@ -83,6 +92,7 @@ export const CreateUserForm = () => {
               <FormField
                 control={form.control}
                 name="role"
+                disabled={isPending}
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Role</FormLabel>
@@ -101,7 +111,7 @@ export const CreateUserForm = () => {
                 )}
               />
             </div>
-            <Button className="w-full" type="submit">Create user</Button>
+            <Button disabled={isPending} className="w-full" type="submit">Create user</Button>
           </form>
         </Form> 
       </CardContent>

@@ -9,12 +9,12 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { CustomDialog } from "../dialog-custom"
 import { UpdateUserForm } from "../update-user-form"
 import { UserRole } from "@prisma/client"
+import { DeleteUserForm } from "../delete-user-form"
 
 export type User = {
   id: string
@@ -72,12 +72,20 @@ export const columns: ColumnDef<User>[] = [
           </DropdownMenuTrigger>
           <DropdownMenuContent>
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuSeparator/>
-            <DropdownMenuItem asChild className="cursor-pointer">
-              <CustomDialog buttonLabel="Update user" variant="ghost">
-                <UpdateUserForm email={user.email} name={user.name} role={user.role} id={user.id}/>   
-              </CustomDialog>
-            </DropdownMenuItem>
+            <ul>
+              <li>
+                <DropdownMenuItem asChild className="cursor-pointer">
+                  <CustomDialog buttonLabel="Update user" variant="ghost">
+                    <UpdateUserForm email={user.email} name={user.name} role={user.role} id={user.id}/>   
+                  </CustomDialog>
+                </DropdownMenuItem>
+              </li>
+              <li>
+                <DropdownMenuItem asChild className="cursor-pointer">
+                  <DeleteUserForm id={user.id} name={user.name}/>
+                </DropdownMenuItem>
+              </li>
+            </ul>
           </DropdownMenuContent>
         </DropdownMenu>
       )

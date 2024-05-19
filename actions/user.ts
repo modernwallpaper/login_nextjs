@@ -7,6 +7,7 @@ import * as z from "zod"
 import bcrypt from "bcryptjs"
 import { db } from "@/lib/db"
 import { logout } from "./logout"
+import { useRouter } from "next/navigation"
 
 export const createUser = async (values: z.infer<typeof createUserSchema>) => {
   const role_session = await currentRole()
@@ -75,6 +76,17 @@ export const updateUserAsUser = async (values: z.infer<typeof UpdateUserSchema>)
   })
   
   logout()
+}
+
+export const deleteUserAsAdmin = async(id: string) => {
+
+  const role_session = await currentRole()
+  if(role_session === UserRole.USER) return { error: "You are not allowd to delete a user" }
+
+  await db.user.delete({ where: { id, } })
+
+
+  return { success: "User has been deleted successfully" }
 }
 
 export const getAllUsers = async() => {

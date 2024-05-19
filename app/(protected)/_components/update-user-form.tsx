@@ -9,6 +9,7 @@ import { Select, SelectContent, SelectTrigger, SelectValue, SelectItem } from "@
 import { useToast } from "@/components/ui/use-toast"
 import { UpdateUserSchema, createUserSchema } from "@/schemas"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { useRouter } from "next/navigation"
 import { startTransition, useState, useTransition } from "react"
 import { useForm } from "react-hook-form"
 import * as z from "zod"
@@ -27,10 +28,12 @@ export const UpdateUserForm = ({ email, name, role, id }: { email: string, name:
 
   const [isPending, startTransition] = useTransition()
   const { toast } = useToast()
+  const router = useRouter()
 
   const onSubmit = (values: z.infer<typeof UpdateUserSchema>) => {
     startTransition(() => {
       updateUserAsAdmin(values).then((data) => {
+        router.refresh()
         if(data.error) toast({ title: data.error, variant: "destructive" })
         toast({ title: data.success })
       })
@@ -40,7 +43,7 @@ export const UpdateUserForm = ({ email, name, role, id }: { email: string, name:
   return(
     <div className="w-[350px] m-0">
       <CardHeader>
-        <CardTitle>Update an existing user</CardTitle>
+        <CardTitle>Update user {name}</CardTitle>
         <CardDescription>Enter the new user info to update</CardDescription>
       </CardHeader>
       <CardContent>
