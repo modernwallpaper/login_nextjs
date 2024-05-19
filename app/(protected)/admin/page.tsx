@@ -7,7 +7,7 @@ import { UserList } from "../_components/user-list"
 export default async function AdminPage() {
 
   return(
-    <div>
+    <div className="w-full h-full flex-col justify-center">
       <PageHeader label="Admin"/>
       <RoleGate allowedRole={UserRole.ADMIN}>
         <div className="space-y-4">

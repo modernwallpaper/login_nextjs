@@ -11,7 +11,7 @@ export const Navbar = () => {
 
   return(
     <div className="backdrop-blur">
-      <div className="border-b-2 flex justify-between items-center p-2 w-full backdrop-blur h-[60px] md:pr-20 md:pl-20">
+      <div className="border-b flex justify-between items-center p-2 w-full backdrop-blur h-[60px] md:pr-20 md:pl-20">
         <div className="md:hidden">
           <Sheet>
             <SheetTrigger asChild>
@@ -59,19 +59,19 @@ export const Navbar = () => {
           </Sheet>
         </div>
         <div className="hidden md:flex gap-x-2 items-center">
-          <Button asChild variant={"nav_link"} className={pathname === "/training" ? "text-primary" : "text-muted-foreground hover:text-primary"}>
+          <Button asChild variant={"nav_link"} className={pathname === "/admin" ? "text-primary" : "text-muted-foreground hover:text-primary"}>
             <Link href={"/admin"}>Admin</Link>
           </Button> 
-          <Button asChild variant={"nav_link"} className={pathname === "/training" ? "text-primary" : "text-muted-foreground hover:text-primary"}>
+          <Button asChild variant={"nav_link"} className={pathname === "/analysis" ? "text-primary" : "text-muted-foreground hover:text-primary"}>
             <Link href={"/analysis"}>Analysis</Link>
           </Button> 
-          <Button asChild variant={"nav_link"} className={pathname === "/training" ? "text-primary" : "text-muted-foreground hover:text-primary"}>
+          <Button asChild variant={"nav_link"} className={pathname === "/events" ? "text-primary" : "text-muted-foreground hover:text-primary"}>
             <Link href={"/events"}>Events</Link>
           </Button> 
-          <Button asChild variant={"nav_link"} className={pathname === "/training" ? "text-primary" : "text-muted-foreground hover:text-primary"}>
+          <Button asChild variant={"nav_link"} className={pathname === "/competitions" ? "text-primary" : "text-muted-foreground hover:text-primary"}>
             <Link href={"/competitions"}>Competitions</Link>
           </Button> 
-          <Button asChild variant={"nav_link"} className={pathname === "/training" ? "text-primary" : "text-muted-foreground hover:text-primary"}>
+          <Button asChild variant={"nav_link"} className={pathname === "/scoreboard" ? "text-primary" : "text-muted-foreground hover:text-primary"}>
             <Link href={"/scorecard"}>Scorecard</Link>
           </Button> 
           <Button asChild variant={"nav_link"} className={pathname === "/training" ? "text-primary" : "text-muted-foreground hover:text-primary"}>

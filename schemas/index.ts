@@ -25,3 +25,11 @@ export const UpdateUserSchema = z.object({
   password: z.string().min(6),
   role: z.enum(["USER", "ADMIN"]),
 })
+
+export const FighterDataSchema = z.object({
+  weight: z.string().min(1),
+  gender: z.enum(["MALE", "FEMALE"]),
+  weight_class: z.string().min(1),
+  kup: z.string().min(1),
+  age: z.string().min(1),
+})

@@ -14,6 +14,11 @@ enum UserRole {
   USER
 }
 
+enum FighterGender {
+  MALE
+  FEMALE
+}
+
 model User {
   id            String    @id @default(cuid())
   name          String
@@ -23,6 +28,18 @@ model User {
   emailVerified DateTime? 
   image         String?
   accounts      Account[]
+  fighterdata   FigherData[]
+}
+
+model FigherData {
+  id            String @id @default(cuid())
+  weight        String
+  gender        FighterGender 
+  weight_class  String
+  kup           String
+  age           String
+
+  user User @relation(fields: [id], references: [id], onDelete: Cascade)
 }
 
 model Account {

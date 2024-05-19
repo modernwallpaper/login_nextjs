@@ -18,3 +18,11 @@ export const getUserById = async (id: string | undefined) => {
   }
 }
 
+export const getFighterDataById =  async (id: string | undefined) => {
+  try {
+    const data = await db.figherData.findUnique({ where: { id } })
+    return data
+  } catch(error) {
+    return null
+  }
+}
