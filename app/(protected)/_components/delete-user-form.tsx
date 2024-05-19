@@ -40,7 +40,7 @@ export const DeleteUserForm = ({ id, name }: { id: string, name: string }) => {
         <AlertDialogHeader>
           <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
           <AlertDialogDescription>
-            This action cannot be undone. This will permanently delete the account "{name}"
+            This action cannot be undone. This will permanently delete the account &quot;{name}&quot;
             and remove its data from the server
           </AlertDialogDescription>
         </AlertDialogHeader>
