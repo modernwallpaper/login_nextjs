@@ -16,7 +16,7 @@ import * as z from "zod"
 
 export const SettingsForm = () => {
   const user = useCurrentUser()
-  const [defaultValuesFighter, setDefaultValuesFighter] = useState<z.infer<typeof FighterDataSchema> | undefined>(undefined)
+  const [defaultValuesFighter, setDefaultValuesFighter] = useState(undefined)
   const { toast } = useToast()
 
   // Get Existing Data
@@ -33,13 +33,7 @@ export const SettingsForm = () => {
 
   const form = useForm<z.infer<typeof FighterDataSchema>>({
     resolver: zodResolver(FighterDataSchema),
-    defaultValues: {
-      weight: defaultValuesFighter?.weight,
-      age: defaultValuesFighter?.age,
-      gender: defaultValuesFighter?.gender,
-      weight_class: defaultValuesFighter?.weight_class,
-      kup: defaultValuesFighter?.kup,
-    } 
+    defaultValues: defaultValuesFighter
   })
 
   const submitFighterData = (values: z.infer<typeof FighterDataSchema>) => {
