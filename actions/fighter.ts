@@ -5,7 +5,7 @@ import { db } from "@/lib/db"
 import { FighterDataSchema } from "@/schemas"
 import * as z from "zod"
 
-export const createFighterData = async (values: z.infer<typeof FighterDataSchema>, userId: string) => {
+export const createFighterData = async (values: z.infer<typeof FighterDataSchema>, userId: string | undefined) => {
   const validatedFields = FighterDataSchema.safeParse(values)
   if(!validatedFields.success) return { error: "Invalid fields" }
 

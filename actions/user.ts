@@ -7,7 +7,6 @@ import * as z from "zod"
 import bcrypt from "bcryptjs"
 import { db } from "@/lib/db"
 import { logout } from "./logout"
-import { useRouter } from "next/navigation"
 
 export const createUser = async (values: z.infer<typeof createUserSchema>) => {
   const role_session = await currentRole()

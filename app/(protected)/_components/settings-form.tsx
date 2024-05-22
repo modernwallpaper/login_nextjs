@@ -1,12 +1,15 @@
+import { createFighterData } from "@/actions/fighter"
+import { Button } from "@/components/ui/button"
 import { Form, FormControl, FormField, FormItem, FormLabel } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { useToast } from "@/components/ui/use-toast"
 import { getFighterDataById } from "@/data/user"
 import { useCurrentUser } from "@/hooks/use-current-session"
 import { FighterDataSchema } from "@/schemas"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useSession } from "next-auth/react"
-import { useEffect, useState } from "react"
+import { startTransition, useEffect, useState, useTransition } from "react"
 import { useForm } from "react-hook-form"
 import * as z from "zod"
 
@@ -14,15 +17,14 @@ import * as z from "zod"
 export const SettingsForm = () => {
   const user = useCurrentUser()
   const [defaultValuesFighter, setDefaultValuesFighter] = useState<z.infer<typeof FighterDataSchema> | undefined>(undefined)
+  const { toast } = useToast()
 
   // Get Existing Data
   useEffect(() => {
     const fetchData = async () => {
       if (user?.id) {
         const data = await getFighterDataById(user.id)
-        if (data) {
-          setDefaultValuesFighter(data)
-        }
+        setDefaultValuesFighter(data)
       }
     }
     fetchData()
@@ -31,13 +33,28 @@ export const SettingsForm = () => {
 
   const form = useForm<z.infer<typeof FighterDataSchema>>({
     resolver: zodResolver(FighterDataSchema),
-    defaultValues: defaultValuesFighter
-  }) 
+    defaultValues: {
+      weight: defaultValuesFighter?.weight,
+      age: defaultValuesFighter?.age,
+      gender: defaultValuesFighter?.gender,
+      weight_class: defaultValuesFighter?.weight_class,
+      kup: defaultValuesFighter?.kup,
+    } 
+  })
+
+  const submitFighterData = (values: z.infer<typeof FighterDataSchema>) => {
+    startTransition(() => {
+      createFighterData(values, user?.id).then((data) => {
+        if(data.error) toast({ title: data.error })
+        toast({ title: data.success })
+      })
+    })  
+  }
 
   return(
     <div className="w-[350px]">
       <Form {...form}>
-        <form onSubmit={() => console.log("Submit requested")} className="space-y-6">
+        <form onSubmit={form.handleSubmit(submitFighterData)} className="space-y-6">
           <div className="space-y-2">
             <FormField 
               control={form.control}
@@ -58,7 +75,7 @@ export const SettingsForm = () => {
                 <FormItem>
                   <FormLabel>Age</FormLabel>
                   <FormControl>
-                    <Input {...field} placeholder="year"/>
+                    <Input {...field} placeholder="age"/>
                   </FormControl>
                 </FormItem>
               )}
@@ -125,14 +142,23 @@ export const SettingsForm = () => {
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      <SelectItem value="MALE">Male</SelectItem>
-                      <SelectItem value="FEMALE">Female</SelectItem>
+                      <SelectItem value="1">1st Kup</SelectItem>
+                      <SelectItem value="2">2nd Kup</SelectItem>
+                      <SelectItem value="3">3rd Kup</SelectItem>
+                      <SelectItem value="4">4th Kup</SelectItem>
+                      <SelectItem value="5">5th Kup</SelectItem>
+                      <SelectItem value="6">6th Kup</SelectItem>
+                      <SelectItem value="7">7th Kup</SelectItem>
+                      <SelectItem value="8">8th Kup</SelectItem>
                     </SelectContent>
                   </Select>
                 </FormItem>
               )}
             />  
           </div>
+          <Button className="w-full" type="submit">
+            Update data
+          </Button>
         </form>
       </Form>
     </div>

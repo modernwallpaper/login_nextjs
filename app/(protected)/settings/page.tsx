@@ -6,17 +6,17 @@ import { PageHeader } from "../_components/page-header"
 import { SettingsForm } from "../_components/settings-form"
 
 export default function Settings() {
-  const onClick = () => {
-     logout()
-  }
-
-  const user = useCurrentUser();
-  
+  // const onClick = () => {
+  //    logout()
+  // }
+  //
+  // // const user = useCurrentUser();
+  // // 
   return (
     <div className="w-full h-full">
       <PageHeader label="Settings"/>
       <SettingsForm />
-      <Button onClick={onClick}>Logout</Button>
+      {/*<Button onClick={onClick}>Logout</Button>*/}
     </div>
   )
 }
