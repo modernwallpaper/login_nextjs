@@ -16,7 +16,7 @@ import * as z from "zod"
 
 export const SettingsForm = () => {
   const user = useCurrentUser()
-  const [defaultValuesFighter, setDefaultValuesFighter] = useState(undefined)
+  const [defaultValuesFighter, setDefaultValuesFighter] = useState({})
   const { toast } = useToast()
 
   // Get Existing Data
