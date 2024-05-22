@@ -24,7 +24,7 @@ export const SettingsForm = () => {
     const fetchData = async () => {
       if (user?.id) {
         const data = await getFighterDataById(user.id)
-        setDefaultValuesFighter(data)
+        setDefaultValuesFighter({ weight: data?.weight, age: data?.age, gender: data?.gender, weight_class: data?.weight_class, kup: data?.kup })
       }
     }
     fetchData()
