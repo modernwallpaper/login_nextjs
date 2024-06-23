@@ -59,15 +59,8 @@ export const SettingsForm = () => {
     })  
   }
 
-  const onClick = () => {
-    console.log(fighter)
-  }
-
   return(
     <div className="w-[350px]">
-    <Button onClick={onClick}>
-      Show Data
-    </Button>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(submitFighterData)} className="space-y-6">
           <div className="space-y-2">
@@ -104,12 +97,12 @@ export const SettingsForm = () => {
                   <Select onValueChange={field.onChange} defaultValue={field.value}>
                     <FormControl>
                       <SelectTrigger>
-                        <SelectValue placeholder="Select a gender" />
+                        <SelectValue placeholder={fighter ? fighter.gender : "Choose a gender"} />
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      <SelectItem value="MALE">Male</SelectItem>
-                      <SelectItem value="FEMALE">Female</SelectItem>
+                      <SelectItem value="MALE">MALE</SelectItem>
+                      <SelectItem value="FEMALE">FEMALE</SelectItem>
                     </SelectContent>
                   </Select>
                 </FormItem>
@@ -124,21 +117,20 @@ export const SettingsForm = () => {
                   <Select onValueChange={field.onChange} defaultValue={field.value}>
                     <FormControl>
                       <SelectTrigger>
-                        <SelectValue placeholder="Select weight class" />
+                        <SelectValue placeholder={fighter ? fighter.weight_class : "Select a weight class"} />
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      <SelectItem value="-45">until 45</SelectItem>
-                      <SelectItem value="-48">until 48</SelectItem>
-                      <SelectItem value="-51">until 51</SelectItem>
-                      <SelectItem value="-55">until 55</SelectItem>
-                      <SelectItem value="-59">until 59</SelectItem>
-                      <SelectItem value="-63">until 63</SelectItem>
-                      <SelectItem value="-68">until 68</SelectItem>
-                      <SelectItem value="-73">until 73</SelectItem>
-                      <SelectItem value="+73">over 73</SelectItem>
-                      <SelectItem value="-78">until 78</SelectItem>
-                      <SelectItem value="+78">over 78</SelectItem>
+                      <SelectItem value="-45">-45</SelectItem>
+                      <SelectItem value="-48">-48</SelectItem>
+                      <SelectItem value="-51">-51</SelectItem>
+                      <SelectItem value="-55">-55</SelectItem>
+                      <SelectItem value="-59">-59</SelectItem>
+                      <SelectItem value="-63">-63</SelectItem>
+                      <SelectItem value="-68">-68</SelectItem>
+                      <SelectItem value="-73">-73</SelectItem>
+                      <SelectItem value="-78">-78</SelectItem>
+                      <SelectItem value="+78">+78</SelectItem>
                     </SelectContent>
                   </Select>
                 </FormItem>
@@ -153,18 +145,18 @@ export const SettingsForm = () => {
                   <Select onValueChange={field.onChange} defaultValue={field.value}>
                     <FormControl>
                       <SelectTrigger>
-                        <SelectValue placeholder="Select a kup"/>
+                        <SelectValue placeholder={fighter ? fighter.kup : "Select a kup"} />
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      <SelectItem value="1">1st Kup</SelectItem>
-                      <SelectItem value="2">2nd Kup</SelectItem>
-                      <SelectItem value="3">3rd Kup</SelectItem>
-                      <SelectItem value="4">4th Kup</SelectItem>
-                      <SelectItem value="5">5th Kup</SelectItem>
-                      <SelectItem value="6">6th Kup</SelectItem>
-                      <SelectItem value="7">7th Kup</SelectItem>
-                      <SelectItem value="8">8th Kup</SelectItem>
+                      <SelectItem value="1">1</SelectItem>
+                      <SelectItem value="2">2</SelectItem>
+                      <SelectItem value="3">3</SelectItem>
+                      <SelectItem value="4">4</SelectItem>
+                      <SelectItem value="5">5</SelectItem>
+                      <SelectItem value="6">6</SelectItem>
+                      <SelectItem value="7">7</SelectItem>
+                      <SelectItem value="8">8</SelectItem>
                     </SelectContent>
                   </Select>
                 </FormItem>
