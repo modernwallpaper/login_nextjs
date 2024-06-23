@@ -8,32 +8,24 @@ import { getFighterDataById } from "@/data/user"
 import { useCurrentUser } from "@/hooks/use-current-session"
 import { FighterDataSchema } from "@/schemas"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { useSession } from "next-auth/react"
-import { startTransition, useEffect, useState, useTransition } from "react"
+import { startTransition, useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
 import * as z from "zod"
 
-
 export const SettingsForm = () => {
   const user = useCurrentUser()
-  const [defaultValuesFighter, setDefaultValuesFighter] = useState({})
   const { toast } = useToast()
 
-  // Get Existing Data
-  useEffect(() => {
-    const fetchData = async () => {
-      if (user?.id) {
-        const data = await getFighterDataById(user.id)
-        setDefaultValuesFighter({ weight: data?.weight, age: data?.age, gender: data?.gender, weight_class: data?.weight_class, kup: data?.kup })
-      }
-    }
-    fetchData()
-  }, [user?.id])
+  const [fighter, setFighter] = useState(null)
 
+  useEffect(() => {
+    if (user?.id) {
+      getFighterDataById(user.id).then(data => setFighter(data))
+    }
+  }, [user?.id])
 
   const form = useForm<z.infer<typeof FighterDataSchema>>({
     resolver: zodResolver(FighterDataSchema),
-    defaultValues: defaultValuesFighter
   })
 
   const submitFighterData = (values: z.infer<typeof FighterDataSchema>) => {
@@ -45,8 +37,15 @@ export const SettingsForm = () => {
     })  
   }
 
+  const onClick = () => {
+    console.log(fighter)
+  }
+
   return(
     <div className="w-[350px]">
+    <Button onClick={onClick}>
+      Show Data
+    </Button>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(submitFighterData)} className="space-y-6">
           <div className="space-y-2">
