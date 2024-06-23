@@ -10,14 +10,22 @@ import { FighterDataSchema } from "@/schemas"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { startTransition, useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
-import { FigherData } from "@prisma/client"
 import * as z from "zod"
+
+type FighterData = {
+  id: string
+  weight: string
+  gender: "MALE" | "FEMALE"
+  weight_class: string
+  kup: string
+  age: string
+} | null
 
 export const SettingsForm = () => {
   const user = useCurrentUser()
   const { toast } = useToast()
 
-  const [fighter, setFighter] = useState<FigherData>()
+  const [fighter, setFighter] = useState<FighterData>(null)
 
   useEffect(() => {
     if (user?.id) {
@@ -39,6 +47,7 @@ export const SettingsForm = () => {
   }
 
   const onClick = () => {
+    console.log(user)
     console.log(fighter)
   }
 
