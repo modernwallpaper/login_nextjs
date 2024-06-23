@@ -44,7 +44,7 @@ export const SettingsForm = () => {
         }
       })
     }
-  }, [user?.id])
+  }, [user?.id, form])
 
   const form = useForm<z.infer<typeof FighterDataSchema>>({
     resolver: zodResolver(FighterDataSchema),
