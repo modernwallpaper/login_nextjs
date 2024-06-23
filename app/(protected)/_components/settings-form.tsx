@@ -10,13 +10,14 @@ import { FighterDataSchema } from "@/schemas"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { startTransition, useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
+import { FigherData } from "@prisma/client"
 import * as z from "zod"
 
 export const SettingsForm = () => {
   const user = useCurrentUser()
   const { toast } = useToast()
 
-  const [fighter, setFighter] = useState(null)
+  const [fighter, setFighter] = useState<FigherData>()
 
   useEffect(() => {
     if (user?.id) {
