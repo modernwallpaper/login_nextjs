@@ -29,7 +29,20 @@ export const SettingsForm = () => {
 
   useEffect(() => {
     if (user?.id) {
-      getFighterDataById(user.id).then(data => setFighter(data))
+      console.log(`Fetching data for user id: ${user.id}`)
+      getFighterDataById(user.id).then(data => {
+        console.log(`Data fetched: ${JSON.stringify(data)}`)
+        setFighter(data)
+        if (data) {
+          form.reset({
+            weight: data.weight,
+            gender: data.gender,
+            weight_class: data.weight_class,
+            kup: data.kup,
+            age:data.age,
+          })
+        }
+      })
     }
   }, [user?.id])
 
@@ -47,7 +60,6 @@ export const SettingsForm = () => {
   }
 
   const onClick = () => {
-    console.log(user)
     console.log(fighter)
   }
 
