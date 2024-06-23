@@ -1,17 +1,14 @@
 "use client"
 
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
-import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar"
+import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
+import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import { CircleUserRound } from "lucide-react"
-import { useCurrentUser } from "@/hooks/use-current-session"
 import { LogoutButton } from "@/components/auth/logout-button"
 import { Button } from "@/components/ui/button"
 import { LogOut } from "lucide-react"
 import Link from "next/link"
 
 export const UserButton = () => {
-  const user = useCurrentUser()
-
   return(
     <DropdownMenu>
       <DropdownMenuTrigger>

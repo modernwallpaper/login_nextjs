@@ -13,7 +13,7 @@ import {
 import { Button } from "@/components/ui/button"
 import { useToast } from "@/components/ui/use-toast"
 import { useRouter } from "next/navigation"
-import { startTransition, useTransition } from "react"
+import { useTransition } from "react"
 
 
 export const DeleteUserForm = ({ id, name }: { id: string, name: string }) => {
@@ -27,8 +27,8 @@ export const DeleteUserForm = ({ id, name }: { id: string, name: string }) => {
     startTransition(() => {
       deleteUserAsAdmin(id).then((data) => {
         router.refresh()
-        if(data.error) toast({ title: data.error, variant: "destructive" })
-        toast({ title: data.success })
+        if(data.error) toast({ description: data.error, variant: "destructive" })
+        toast({ description: data.success })
       })
     })
   }

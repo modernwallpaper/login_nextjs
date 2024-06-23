@@ -8,10 +8,11 @@ import { getFighterDataById } from "@/data/user"
 import { useCurrentUser } from "@/hooks/use-current-session"
 import { FighterDataSchema } from "@/schemas"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { startTransition, useEffect, useState } from "react"
+import { useEffect, useState, useTransition } from "react"
 import { useForm } from "react-hook-form"
 import * as z from "zod"
 
+//Define the fighter data to get rid of typing issues
 type FighterData = {
   id: string
   weight: string
@@ -24,9 +25,10 @@ type FighterData = {
 export const SettingsForm = () => {
   const user = useCurrentUser()
   const { toast } = useToast()
-
+  const [isPending, startTransition] = useTransition()
   const [fighter, setFighter] = useState<FighterData>(null)
 
+  //Get the current fighter data with the user id to fill out the fields in the form
   useEffect(() => {
     if (user?.id) {
       console.log(`Fetching data for user id: ${user.id}`)
@@ -45,16 +47,18 @@ export const SettingsForm = () => {
       })
     }
   }, [user?.id])
-
+  
+  //Create valdiation for the form
   const form = useForm<z.infer<typeof FighterDataSchema>>({
     resolver: zodResolver(FighterDataSchema),
   })
 
+  //When form submitted pass the filled out fields to the create fighter function
   const submitFighterData = (values: z.infer<typeof FighterDataSchema>) => {
     startTransition(() => {
       createFighterData(values, user?.id).then((data) => {
-        if(data.error) toast({ title: data.error })
-        toast({ title: data.success })
+        if(data.error) toast({ description: data.error })
+        toast({ description: data.success })
       })
     })  
   }
@@ -65,6 +69,7 @@ export const SettingsForm = () => {
         <form onSubmit={form.handleSubmit(submitFighterData)} className="space-y-6">
           <div className="space-y-2">
             <FormField 
+              disabled={isPending}
               control={form.control}
               name="weight"
               render={({field}) => (
@@ -77,6 +82,7 @@ export const SettingsForm = () => {
               )}
             />  
             <FormField 
+              disabled={isPending}
               control={form.control}
               name="age"
               render={({field}) => (
@@ -89,6 +95,7 @@ export const SettingsForm = () => {
               )}
             />  
             <FormField 
+              disabled={isPending}
               control={form.control}
               name="gender"
               render={({field}) => (
@@ -109,6 +116,7 @@ export const SettingsForm = () => {
               )}
             />  
             <FormField 
+              disabled={isPending}
               control={form.control}
               name="weight_class"
               render={({field}) => (
@@ -137,6 +145,7 @@ export const SettingsForm = () => {
               )}
             />  
             <FormField 
+              disabled={isPending}
               control={form.control}
               name="kup"
               render={({field}) => (
@@ -163,7 +172,7 @@ export const SettingsForm = () => {
               )}
             />  
           </div>
-          <Button className="w-full" type="submit">
+          <Button disabled={isPending} className="w-full" type="submit">
             Update data
           </Button>
         </form>

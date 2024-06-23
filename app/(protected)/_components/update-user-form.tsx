@@ -1,20 +1,21 @@
 "use client"
 import { updateUserAsAdmin } from "@/actions/user"
-import { FormError } from "@/components/app/form-error"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
+import { CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Form, FormControl, FormField, FormItem, FormLabel } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectTrigger, SelectValue, SelectItem } from "@/components/ui/select"
 import { useToast } from "@/components/ui/use-toast"
-import { UpdateUserSchema, createUserSchema } from "@/schemas"
+import { UpdateUserSchema } from "@/schemas"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useRouter } from "next/navigation"
-import { startTransition, useState, useTransition } from "react"
+import { useTransition } from "react"
 import { useForm } from "react-hook-form"
 import * as z from "zod"
 
 export const UpdateUserForm = ({ email, name, role, id }: { email: string, name: string, role: "ADMIN" | "USER", id: string }) => {
+
+  //Create types and default values for the form
   const form = useForm<z.infer<typeof UpdateUserSchema>>({
     resolver: zodResolver(UpdateUserSchema),
     defaultValues: {
@@ -30,12 +31,13 @@ export const UpdateUserForm = ({ email, name, role, id }: { email: string, name:
   const { toast } = useToast()
   const router = useRouter()
 
+  //Update the user
   const onSubmit = (values: z.infer<typeof UpdateUserSchema>) => {
     startTransition(() => {
       updateUserAsAdmin(values).then((data) => {
         router.refresh()
-        if(data.error) toast({ title: data.error, variant: "destructive" })
-        toast({ title: data.success })
+        if(data.error) toast({ description: data.error, variant: "destructive" })
+        toast({ description: data.success })
       })
     })    
   }

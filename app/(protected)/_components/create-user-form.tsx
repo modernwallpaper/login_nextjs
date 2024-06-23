@@ -1,19 +1,21 @@
 "use client"
 import { createUser } from "@/actions/user"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
+import { CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Form, FormControl, FormField, FormItem, FormLabel } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectTrigger, SelectValue, SelectItem } from "@/components/ui/select"
 import { useToast } from "@/components/ui/use-toast"
 import { createUserSchema } from "@/schemas"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { startTransition, useTransition } from "react"
+import { useTransition } from "react"
 import { useForm } from "react-hook-form"
 import * as z from "zod"
 import { useRouter } from "next/navigation"
 
 export const CreateUserForm = () => {
+  
+  //define the form types
   const form = useForm<z.infer<typeof createUserSchema>>({
     resolver: zodResolver(createUserSchema),
     defaultValues: {
@@ -29,12 +31,13 @@ export const CreateUserForm = () => {
 
   const [isPending, startTransition] = useTransition()
 
+  //Call the createUser function when form gets submitted by the submit button
   const onSubmit = (values: z.infer<typeof createUserSchema>) => {
     startTransition(() => {
       createUser(values).then((data) => {
         router.refresh()
-        if(data.error) toast({ title: data.error })
-        toast({ title: data.success })
+        if(data.error) toast({ description: data.error })
+        toast({ description: data.success })
       })
     })   
   }
