@@ -10,7 +10,7 @@ export const Navbar = () => {
   const pathname = usePathname()
 
   return(
-    <div className="backdrop-blur">
+    <div className="fixed top-0 left-0 right-0 z-50 backdrop-blur ">
       <div className="border-b flex justify-between items-center p-2 w-full backdrop-blur h-[60px] md:pr-20 md:pl-20">
         <div className="md:hidden">
           <Sheet>

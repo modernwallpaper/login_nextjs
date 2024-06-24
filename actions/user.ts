@@ -99,3 +99,13 @@ export const getAllUsers = async() => {
   }
 }
 
+export const getAllFighters = async () => {
+  const role_session = await currentRole()
+  if(role_session === UserRole.USER) return { error: "You do not have the necessary permissions to get this content" }
+  try {
+    const fighters = await db.figherData.findMany()
+    return fighters
+  } catch (error) {
+    return null
+  }
+}
