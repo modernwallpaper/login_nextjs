@@ -8,6 +8,10 @@ import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/s
 
 export const Navbar = () => {
   const pathname = usePathname()
+<<<<<<< HEAD
+=======
+  const adminpaths = ["/admin", "/admin/users", "/admin/fighters"]
+>>>>>>> 2f284e8 (Fixed git issues bc of quick power loss)
 
   return(
     <header className="sticky top-0 z-50 w-full border-b backdrop-blur supports-[backdrop-filter]:bg-background/60 flex justify-between items-center h-[60px] md:pr-20 md:pl-20">
@@ -23,7 +27,11 @@ export const Navbar = () => {
             <div className="flex-row gap-y-2 items-center">
               <ul>
                 <li>
+<<<<<<< HEAD
                   <Button asChild variant={"nav_link"} className={pathname === "/admin" ? "text-primary" : "text-muted-foreground hover:text-primary"}>
+=======
+                  <Button asChild variant={"nav_link"} className={adminpaths.includes(pathname) ?  "text-primary" : "text-muted-foreground hover:text-primary"}>
+>>>>>>> 2f284e8 (Fixed git issues bc of quick power loss)
                     <Link href={"/admin"}>Admin</Link>
                   </Button> 
                 </li>
