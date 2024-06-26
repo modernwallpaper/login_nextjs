@@ -1,7 +1,7 @@
 export default function Page() {
   return(
     <p>
-      I don't know what to write here
+      This is the starter page for admins. Here you can change, edit and delete user or fighter info  
     </p>
   )
 } 
